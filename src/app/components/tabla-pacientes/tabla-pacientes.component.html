@@ -1,0 +1,79 @@
+<!--Buscado de usuarios-->
+<div class="form-group form-inline">
+  Buscar paciente:
+  <input class="form-control ml-2" type="text" [(ngModel)]="buscarPaciente" />
+</div>
+
+<table
+  class="table table-striped"
+  style="font-size: small; white-space: nowrap"
+>
+  <thead>
+    <tr>
+      <th scope="col">Nombre de paciente</th>
+      <th scope="col">Área médica</th>
+      <th scope="col">Hora</th>
+      <th scope="col">Confirma</th>
+      <th scope="col">Asiste</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let cita of listaCitas | pacienteFilter: buscarPaciente;
+        let i = index
+      "
+    >
+      <td class="align-middle" *ngIf="cita.nombre_social == 'no especifica'">
+        {{ cita.nombre_paciente }}
+      </td>
+      <td class="align-middle" *ngIf="cita.nombre_social !== 'no especifica'">
+        {{ cita.nombre_social }}
+      </td>
+      <td class="align-middle">
+        {{ cita.valor }}
+      </td>
+      <td class="align-middle">
+        <ng-container *ngIf="cita.hora === ''">
+          <p class="estado_cita">No agendada</p>
+        </ng-container>
+        <ng-container *ngIf="cita.hora !== ''">
+          {{ cita.hora }}
+        </ng-container>
+      </td>
+      <td class="align-middle">
+        <button
+          class="btn btn-primary btn-sm tamBoton"
+          (click)="confirmarCita(cita)"
+        >
+          Confirmar
+        </button>
+        <ng-container *ngIf="cita.confirmada === 0">
+          <i class="fas fa-times ml-2"></i>
+        </ng-container>
+        <ng-container *ngIf="cita.confirmada === 1">
+          <i class="fas fa-check ml-2"></i>
+        </ng-container>
+      </td>
+      <td class="align-middle">
+        <button
+          class="btn btn-primary btn-sm tamBoton"
+          (click)="asistirCita(cita)"
+          [disabled]="cita.estado === 'asistida' || cita.estado === 'atendida'"
+        >
+          Asistir
+        </button>
+        <ng-container
+          *ngIf="cita.estado === 'creada' || cita.estado === 'agendada'"
+        >
+          <i class="fas fa-times ml-2"></i>
+        </ng-container>
+        <ng-container
+          *ngIf="cita.estado === 'asistida' || cita.estado === 'atendida'"
+        >
+          <i class="fas fa-check ml-2"></i>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,24 @@
+<div class="calendario">
+  <div class="header-calendario">
+    <button (click)="changeMonth(-1)">Antes</button>
+    <h1>{{ dateSelect | date: "MMMM, yyyy" }}</h1>
+    <button (click)="changeMonth(1)">Siguiente</button>
+  </div>
+  <ol>
+    <li *ngFor="let dia of semana" class="nombre_dia">
+      {{ dia | slice: 0:3 }}
+    </li>
+
+    <li
+      (click)="clickDay(dia)"
+      [style.gridColumnStart]="first ? dia?.indexWeek : 'auto'"
+      *ngFor="let dia of monthSelect; let first = first"
+      class="num_dia"
+      [class.dia_actual]="
+        dia?.value === currentDay && monthValue === currentMonth
+      "
+    >
+      {{ dia?.value }}
+    </li>
+  </ol>
+</div>

@@ -1,0 +1,22 @@
+<div class="form-group">
+  <div class="input-group">
+    <input
+      class="form-control"
+      placeholder="aaaa-mm-dd | (1993-11-29)"
+      name="dp"
+      [(ngModel)]="model"
+      (ngModelChange)="select(model)"
+      ngbDatepicker
+      #d="ngbDatepicker"
+    />
+    <div class="input-group-append">
+      <button
+        class="btn btn-outline-secondary"
+        (click)="d.toggle()"
+        type="button"
+      >
+        <i class="far fa-calendar-alt"></i>
+      </button>
+    </div>
+  </div>
+</div>

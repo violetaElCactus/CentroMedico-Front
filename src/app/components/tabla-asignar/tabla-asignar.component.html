@@ -1,0 +1,148 @@
+<table
+  class="table table-striped"
+  style="font-size: small; white-space: nowrap; table-layout: fixed"
+>
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Zona</th>
+      <th scope="col">Mañana</th>
+      <th scope="col">Tarde</th>
+      <th scope="col">Modificar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let box of boxes">
+      <td>Box #{{ box.nro_box }}</td>
+      <td>Zona {{ box.zona }}</td>
+      <td>
+        <span
+          *ngIf="box.manana !== 'Libre'"
+          class="textLg badge badge-orange ml-2"
+          >{{ box.manana }}</span
+        >
+        <span
+          *ngIf="box.manana === 'Libre'"
+          class="textLg badge badge-lightorange ml-2"
+          >Disponible</span
+        >
+      </td>
+      <td>
+        <span
+          *ngIf="box.tarde !== 'Libre'"
+          class="textLg badge badge-orange ml-2"
+          >{{ box.tarde }}</span
+        >
+        <span
+          *ngIf="box.tarde === 'Libre'"
+          class="textLg badge badge-lightorange ml-2"
+          >Disponible</span
+        >
+      </td>
+      <td>
+        <h5 (click)="open(content, box.id_box)" class="verPointer ml-3">
+          <i class="fas fa-edit"></i>
+        </h5>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!--Paginación-->
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination
+    [collectionSize]="collectionSize"
+    [(page)]="page"
+    [pageSize]="pageSize"
+    (pageChange)="refreshBoxes()"
+  >
+  </ngb-pagination>
+
+  <select
+    class="custom-select"
+    style="width: auto"
+    [(ngModel)]="pageSize"
+    (ngModelChange)="refreshBoxes()"
+  >
+    <option [ngValue]="5">5 boxes</option>
+    <option [ngValue]="8">8 boxes</option>
+    <option [ngValue]="12">12 boxes</option>
+  </select>
+</div>
+
+<!--Modal para agregar una nueva asignación-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Asignar profesional</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="formularioActualizarBox" (ngSubmit)="actualizarBox()">
+    <div class="modal-body">
+      <!--Seleccionar profesional para mañana-->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Mañana:</label>
+        <div class="col-sm-9">
+          <select class="custom-select custom-select" formControlName="manana">
+            <option value="" selected disabled>Seleccionar profesional</option>
+            <option
+              value="{{ usuario.nombre }} {{ usuario.apellido }}"
+              *ngFor="let usuario of usuarios"
+            >
+              {{ usuario.nombre }} {{ usuario.apellido }}
+            </option>
+          </select>
+          <small class="form-text text-orange" *ngIf="campoEsValido('manana')"
+            >Debe ingresar un profesional en este horario.</small
+          >
+        </div>
+      </div>
+      <!--Seleccionar profesional para tarde-->
+      <!--Seleccionar box-->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Tarde:</label>
+        <div class="col-sm-9">
+          <select class="custom-select custom-select" formControlName="tarde">
+            <option value="" selected disabled>Seleccionar profesional</option>
+            <option
+              value="{{ usuario.nombre }} {{ usuario.apellido }}"
+              *ngFor="let usuario of usuarios"
+            >
+              {{ usuario.nombre }} {{ usuario.apellido }}
+            </option>
+          </select>
+          <small class="form-text text-orange" *ngIf="campoEsValido('tarde')"
+            >Debe ingresar un profesional en este horario.</small
+          >
+        </div>
+      </div>
+      <!--Fecha-->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Fecha:</label>
+        <div class="col-sm-9">
+          <input
+            type="text"
+            class="form-control"
+            disabled
+            value="{{ fecha | formatearFecha }}"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="formularioActualizarBox.invalid"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</ng-template>

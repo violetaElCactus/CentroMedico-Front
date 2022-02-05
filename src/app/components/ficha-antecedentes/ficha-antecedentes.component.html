@@ -1,0 +1,101 @@
+<div class="container mt-3" *ngIf="antecedentes === null">
+  <div class="card rounded-5">
+    <div class="card-header bg-secondary">
+      <h6>
+        <strong>Antecedentes mórbidos</strong>
+      </h6>
+    </div>
+    <div class="card-body bg-secondary">
+      <h6>No hay antecedentes registrados</h6>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-3" *ngIf="antecedentes !== null">
+  <div class="card rounded-5">
+    <div class="card-header bg-secondary">
+      <h6>
+        <strong>Antecedentes mórbidos</strong>
+      </h6>
+    </div>
+    <!-- prettier-ignore -->
+    <div class="card-body bg-secondary">
+            <h6><strong>Enfermedades crónicas:</strong></h6>
+            <p>{{antecedentes.morb}}</p>
+            <h6><strong>Especificación de enfermedad(es):</strong></h6>
+            <p>{{antecedentes.trat_morb}}</p>
+            <h6><strong>Medicamento de uso habitual:</strong></h6>
+            <p>{{antecedentes.medic_habitual}}</p>
+            <h6><strong>Quirúrgicos:</strong></h6>
+            <p>{{antecedentes.ant_quirurgico}}</p>
+            <h6><strong>Alergias:</strong></h6>
+            <p>{{antecedentes.alergias}}</p>
+            <h6><strong>Inmunizaciones:</strong></h6>
+            <p>{{antecedentes.inmuni}}</p>
+        </div>
+  </div>
+
+  <div class="card rounded-5 mt-3">
+    <div class="card-header bg-secondary">
+      <h6>
+        <strong>Hábitos</strong>
+      </h6>
+    </div>
+    <div class="card-body bg-secondary p-3">
+      <h6><strong>Hábito tabáquico:</strong></h6>
+      <ng-container *ngIf="antecedentes.tabaco === 'si'">
+        <p>
+          Fumador activo, consumo de {{ antecedentes.cant_cig }} cigarros/día
+          durante {{ antecedentes.anios_cig }} años.
+        </p>
+      </ng-container>
+      <ng-container *ngIf="antecedentes.tabaco === 'no'">
+        <p>No fuma.</p>
+      </ng-container>
+
+      <h6><strong>Consumo del alcohol:</strong></h6>
+      <ng-container *ngIf="antecedentes.alcohol === 'si'">
+        <p>
+          Si, consumo de {{ antecedentes.cant_alcohol }} tragos en promedio y
+          frecuencia de {{ antecedentes.tiempo_alcohol }} al mes.
+        </p>
+      </ng-container>
+      <ng-container *ngIf="antecedentes.alcohol === 'no'">
+        <p>No bebe alcohol.</p>
+      </ng-container>
+      <h6><strong>Consumo de drogas ilegales:</strong></h6>
+      <p>{{ antecedentes.drogas }}</p>
+
+      <h6><strong>Ejercicio físico:</strong></h6>
+      <ng-container *ngIf="antecedentes.ejercicio === 'si'">
+        <p>
+          Si, {{ antecedentes.cant_ejercicio }} a la semana y cada sesión dura
+          {{ antecedentes.min_ejercicio }} minuutos en promedio.
+        </p>
+      </ng-container>
+      <ng-container *ngIf="antecedentes.ejercicio === 'no'">
+        <p>No realiza ejercicio.</p>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="card rounded-5 mt-3">
+    <div class="card-header bg-secondary">
+      <h6>
+        <strong>Antecedentes personales y sociales</strong>
+      </h6>
+    </div>
+    <div class="card-body bg-secondary p-3">
+      <h6><strong>Ocupación/Trabajo:</strong></h6>
+      <p>{{ antecedentes.ocupacion | titlecase }}</p>
+      <h6><strong>Estado civil:</strong></h6>
+      <p>{{ antecedentes.estado_civil | titlecase }}</p>
+      <h6><strong>Nivel de educación:</strong></h6>
+      <p>{{ antecedentes.niv_educacion | titlecase }}</p>
+      <h6><strong>Antecedentes familiares:</strong></h6>
+      <p>{{ antecedentes.antec_familiar }}</p>
+      <h6><strong>Antecedentes sociales:</strong></h6>
+      <p>{{ antecedentes.antec_social }}</p>
+    </div>
+  </div>
+</div>

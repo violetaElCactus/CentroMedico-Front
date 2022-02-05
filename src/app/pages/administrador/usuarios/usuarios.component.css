@@ -1,0 +1,11 @@
+#contenedorTabla {
+  width: 100%;
+  overflow-x: scroll;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+#contenedorTabla::-webkit-scrollbar {
+  display: none;
+}

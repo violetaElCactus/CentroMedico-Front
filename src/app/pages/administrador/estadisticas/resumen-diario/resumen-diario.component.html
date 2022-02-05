@@ -1,0 +1,179 @@
+<!--Nombre del usuario-->
+<section class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 col-md-8">
+        <h1 class="font-weight-bold mb-0">Estadísticas</h1>
+        <p class="lead text-muted">
+          Actividad que corresponde al día {{ mensajeCabecera }}.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Cuerpo de la sección-->
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 my-3">
+        <div class="card rounded-0">
+          <div class="card-header bg-light">
+            <h6 class="font-weight-bold mb-0">Tabla de estadísticas</h6>
+          </div>
+          <div class="card-body">
+            <!--Tablas de pacientes y atenciones-->
+            <div class="row">
+              <!--prettier-ignore-->
+              <div class="col-sm-6">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th colspan="3" class="text-center bg-orange"> Consultas pediátricas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bg-lightorange">
+                        <th scope="row">Atenciones realizadas</th>
+                        <th scope="row">Cantidad</th>
+                    </tr>
+                    <tr>
+                        <td>Ingresos</td>
+                        <td>{{pediatria.ingreso}}</td>
+                    </tr>
+                    <tr>
+                        <td>Controles</td>
+                        <td>{{pediatria.control}}</td>
+                    </tr>
+                    <tr class="bg-lightorange">
+                        <th scope="row" >Total de atenciones</th>
+                        <th scope="row">{{pediatria.total_aten}}</th>
+                    </tr>
+                    <tr>
+                        <td>Niños</td>
+                        <td>{{pediatria.hombre}}</td>
+                    </tr>
+                    <tr>
+                        <td>Niñas</td>
+                        <td>{{pediatria.mujer}}</td>
+                    </tr>
+                    <tr>
+                        <td>NSP</td>
+                        <td>{{pediatria.nsp}}</td>
+                    </tr>
+                    <tr class="bg-lightorange">
+                        <th scope="row" >Total de pacientes agendados</th>
+                        <th scope="row">{{pediatria.total_agen}}</th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--Medicina General-->
+              <div class="col-sm-6">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th colspan="3" class="text-center bg-orange">
+                        Consultas medicina adulto
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bg-lightorange">
+                      <th scope="row">Atenciones realizadas</th>
+                      <th scope="row">Cantidad</th>
+                    </tr>
+                    <tr>
+                      <td>Ingresos</td>
+                      <td>{{ medicina_general.ingreso }}</td>
+                    </tr>
+                    <tr>
+                      <td>Controles</td>
+                      <td>{{ medicina_general.control }}</td>
+                    </tr>
+                    <tr class="bg-lightorange">
+                      <th scope="row">Total de atenciones</th>
+                      <th scope="row">{{ medicina_general.total_aten }}</th>
+                    </tr>
+                    <tr>
+                      <td>Hombre</td>
+                      <td>{{ medicina_general.hombre }}</td>
+                    </tr>
+                    <tr>
+                      <td>Mujeres</td>
+                      <td>{{ medicina_general.mujer }}</td>
+                    </tr>
+                    <tr>
+                      <td>NSP</td>
+                      <td>{{ medicina_general.nsp }}</td>
+                    </tr>
+                    <tr class="bg-lightorange">
+                      <th scope="row">Total de pacientes agendados</th>
+                      <th scope="row">
+                        {{ medicina_general.total_agen }}
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--Procedimientos y especialidad-->
+            <div class="row mt-2">
+              <!--prettier-ignore-->
+              <div class="col-sm-6">
+                  <!--Procedimientos-->
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th colspan="3" class="text-center bg-orange"> Procedimientos</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="bg-lightorange">
+                          <th scope="row">Procedimientos realizados</th>
+                          <th scope="row">Cantidad</th>
+                      </tr>
+                      <tr *ngFor="let proc of listaProcedimientos">
+                          <th>{{proc.nro_box}}</th>
+                          <th>{{proc.cantidad}}</th>
+                      </tr>
+                      <tr class="bg-lightorange">
+                          <th scope="row" >Total</th>
+                          <th scope="row">{{totalProcedimientos}}</th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              <!--Consultas de especialidad-->
+              <div class="col-sm-6">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th colspan="2" class="text-center bg-orange">
+                        Consultas de especialidad
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bg-lightorange">
+                      <th scope="row">Consultas realizadas</th>
+                      <th scope="row">Cantidad</th>
+                    </tr>
+                    <tr *ngFor="let esp of listaEspecialidad">
+                      <td>{{ esp.valor }}</td>
+                      <td>{{ esp.cantidad }}</td>
+                    </tr>
+                    <tr class="bg-lightorange">
+                      <th scope="row">Total</th>
+                      <th scope="row">{{ totalEspecialidad }}</th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

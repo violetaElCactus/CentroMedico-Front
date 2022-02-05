@@ -1,0 +1,67 @@
+<div class="loginHeight">
+  <div class="row vh-100">
+    <div id="columnIzquierda" class="col-lg-6 col-sm-12 bg-logoCentroMedico">
+      <div
+        class="d-flex flex-column min-vh-100 justify-content-center align-items-center"
+      >
+        <img
+          class="logoCentroMedico"
+          src="/assets/images/centromedico.png"
+          alt="logo centro medico"
+        />
+      </div>
+    </div>
+    <div class="col-lg-6 order-first order-md-0 col-sm-12 bg-grey">
+      <div
+        class="d-flex flex-column min-vh-100 justify-content-center align-items-center"
+      >
+        <div class="card cardShadow">
+          <div class="card-body">
+            <h5 class="card-title text-center">Centro Médico</h5>
+            <h6
+              class="card-subtitle mb-3 text-orange text-center font-weight-bold"
+            >
+              Escuela de Medicina
+            </h6>
+            <form
+              autocomplete="off"
+              [formGroup]="loginFormulario"
+              (ngSubmit)="login()"
+            >
+              <input
+                class="loginBlock form-control form-control-lg"
+                type="text"
+                placeholder="RUT del profesional"
+                maxlength="12"
+                formControlName="rut"
+                [value]="loginFormulario.get('rut')?.value | formatearRut"
+              />
+              <small class="form-text text-orange" *ngIf="campoEsValido('rut')">
+                RUT es obligatorio (*)
+              </small>
+              <input
+                class="loginBlock form-control form-control-lg mt-3"
+                type="password"
+                placeholder="Contraseña"
+                formControlName="password"
+              />
+              <small
+                class="form-text text-muted"
+                *ngIf="campoEsValido('password')"
+              >
+                Contraseña es obligatoria (*)
+              </small>
+              <button
+                class="loginBlock btn btn-primary btn-lg btn-block mt-3"
+                [disabled]="loginFormulario.invalid"
+                type="submit"
+              >
+                Iniciar sesión
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

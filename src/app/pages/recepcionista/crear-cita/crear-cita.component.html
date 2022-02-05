@@ -1,0 +1,33 @@
+<section class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <h1 class="font-weight-bold mb-0">Crear cita</h1>
+        <p class="lead text-muted">
+          Selecciona un día del mes e ingresa una nueva cita a ser atendida.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 my-3">
+        <div class="card rounded-0">
+          <div class="card-header bg-light">
+            <h6 class="font-weight-bold mb-0">Calendario para crear citas</h6>
+          </div>
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <app-calendario-citas
+                [path]="'crear-cita'"
+              ></app-calendario-citas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

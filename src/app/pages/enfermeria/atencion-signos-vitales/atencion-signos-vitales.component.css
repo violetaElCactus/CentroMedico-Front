@@ -1,0 +1,13 @@
+#formulario {
+  width: 75%;
+}
+
+@media only screen and (max-width: 450px) {
+  #formulario {
+    width: 90%;
+  }
+}
+
+.divCollapse {
+  cursor: pointer;
+}

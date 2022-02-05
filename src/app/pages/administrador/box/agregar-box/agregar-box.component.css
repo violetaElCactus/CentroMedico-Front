@@ -1,0 +1,9 @@
+#formulario {
+  width: 77%;
+}
+
+@media only screen and (max-width: 450px) {
+  #formulario {
+    width: 90%;
+  }
+}

@@ -1,0 +1,915 @@
+<!--Encabezado de la página-->
+<section class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 col-md-8">
+        <h1 class="font-weight-bold mb-0">Atención de cita</h1>
+        <p class="lead text-muted">
+          Registra nuevos usuarios, gestiona sus datos y disponibilidad.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Formularios-->
+<section>
+  <div class="container">
+    <div class="row justify-content-center my-3">
+      <div id="formulario" class="card rounded-0">
+        <!--Inicio de formulario-->
+        <div class="card-header bg-light">
+          <h6 class="font-weight-bold mb-0">Paciente:</h6>
+        </div>
+
+        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-1">
+          <!--Signos vitales-->
+          <ngb-panel title="Signos Vitales y Antropometría">
+            <ng-template ngbPanelContent>
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <th>T°:</th>
+                    <td>35°c</td>
+                    <th>F.C:</th>
+                    <td>80 cpm</td>
+                    <th>F.R:</th>
+                    <td>13 rpm</td>
+                    <th>P.A:</th>
+                    <td>90/60 mmHg</td>
+                    <th>SAT.O2:</th>
+                    <td>97%</td>
+                  </tr>
+                  <tr>
+                    <th>Peso:</th>
+                    <td>70 Kg</td>
+                    <th>Talla:</th>
+                    <td>1,70 M</td>
+                    <th>CC:</th>
+                    <td>46 cm</td>
+                    <th>P.cintura:</th>
+                    <td>80 cm</td>
+                    <th>IMC:</th>
+                    <td>22</td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-template>
+          </ngb-panel>
+          <!--Anamnesis próxima-->
+          <ngb-panel title="Anamnesis próxima">
+            <ng-template ngbPanelContent>
+              <form class="mx-5 mt-3" [formGroup]="formularioAnamnesis">
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Motivo de consulta:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Ingrese el motivo de la consulta"
+                      formControlName="motivo"
+                    />
+                  </div>
+                </div>
+              </form>
+            </ng-template>
+          </ngb-panel>
+          <!--Anamnesis Remota-->
+          <ngb-panel title="Anamnesis Remota">
+            <ng-template ngbPanelContent>
+              <form class="mx-5 mt-3" [formGroup]="formularioAnamnesis">
+                <!--(ngSubmit)="registro()"-->
+                <!--Estudios-->
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label class="font-weight-bold">Estudios:</label>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="alfabeta"
+                        />
+                        Alfabeta
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-8">
+                    <label class="font-weight-bold">Nivel educacional</label>
+                    <select
+                      class="custom-select custom-select"
+                      formControlName="nvlEducacion"
+                    >
+                      <option value="no evaluado" selected disabled>
+                        Seleccione nivel
+                      </option>
+                      <option value="ninguno">Ninguno</option>
+                      <option value="basica">Básica</option>
+                      <option value="media">Media</option>
+                      <option value="superior">Superior</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!--Nutrición-->
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12"
+                    >Estado Nutricional:</label
+                  >
+                  <div class="col-sm-4">
+                    <select
+                      class="custom-select custom-select"
+                      formControlName="nutri"
+                    >
+                      <option value="no evaluado" selected disabled>
+                        No evaluado
+                      </option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                    </select>
+                  </div>
+                </div>
+                <!--Estado Civil-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12"
+                    >Estado Civil:</label
+                  >
+                  <div class="col-sm-4">
+                    <select
+                      class="custom-select custom-select"
+                      formControlName="estadoCivil"
+                    >
+                      <option value="no evaluado" selected disabled>
+                        Seleccione estado civil
+                      </option>
+                      <option value="soltero">Soltero</option>
+                      <option value="casado">Casado</option>
+                      <option value="convive">Convive</option>
+                      <option value="otro">Otra</option>
+                    </select>
+                  </div>
+                  <div
+                    class="col-sm-8"
+                    *ngIf="formularioAnamnesis.value.estadoCivil === 'otro'"
+                  >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="otro"
+                      formControlName="otroEstadoCivil"
+                    />
+                  </div>
+                </div>
+                <!--Alergias-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12">Alergia:</label>
+                  <div class="col-sm-4">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="alergia"
+                        />
+                        Si
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-8">
+                    <input
+                      *ngIf="formularioAnamnesis.value.alergia"
+                      type="text"
+                      class="form-control"
+                      placeholder="No evaluado"
+                      formControlName="nombreAlergia"
+                    />
+                  </div>
+                </div>
+                <!--Inmunización-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12"
+                    >Inmunizaciones:</label
+                  >
+                  <div class="col-sm-4">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="inmuni"
+                        />
+                        Si
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-8">
+                    <input
+                      *ngIf="formularioAnamnesis.value.inmuni"
+                      type="text"
+                      class="form-control"
+                      placeholder="No evaluado"
+                      formControlName="nombreInmuni"
+                    />
+                  </div>
+                </div>
+                <!--DrogasLegales-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="col-sm-12 font-weight-bold"
+                    >Drogas legales:</label
+                  >
+                  <div class="col-sm-4">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="tabaco"
+                        />
+                        Tabaco
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-8">
+                    <input
+                      *ngIf="formularioAnamnesis.value.tabaco"
+                      type="text"
+                      class="form-control"
+                      placeholder="Cajetillas por año"
+                      formControlName="cantTabaco"
+                    />
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="alcohol"
+                        />
+                        Alcohol
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-8">
+                    <input
+                      *ngIf="formularioAnamnesis.value.alcohol"
+                      type="text"
+                      class="form-control"
+                      placeholder="Cantidad"
+                      formControlName="cantAlcohol"
+                    />
+                  </div>
+                </div>
+                <!--DrogasIlegales-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12"
+                    >Drogas Ilegales:</label
+                  >
+                  <!--Cannabis-->
+                  <div class="col-sm-3">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="cannabis"
+                        />
+                        Cannabis
+                      </label>
+                    </div>
+                  </div>
+                  <!--Cocaina-->
+                  <div class="col-sm-3">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="cocaina"
+                        />
+                        Cocaina
+                      </label>
+                    </div>
+                  </div>
+                  <!--PastaBase-->
+                  <div class="col-sm-3">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="pastaBase"
+                        />
+                        Pasta Base
+                      </label>
+                    </div>
+                  </div>
+                  <!--Otra-->
+                  <div class="col-sm-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Otra"
+                      formControlName="otraDroga"
+                    />
+                  </div>
+                </div>
+                <!--Ejercicio-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Ejercicio:</label
+                  >
+                  <!--EjercicioCheck-->
+                  <div class="col-sm-4">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="ejercicio"
+                        />
+                        Realiza ejercicio
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <input
+                      *ngIf="formularioAnamnesis.value.ejercicio"
+                      type="text"
+                      class="form-control"
+                      placeholder="Horas"
+                      formControlName="horasEjercicio"
+                    />
+                  </div>
+                  <div class="col-sm-4">
+                    <input
+                      *ngIf="formularioAnamnesis.value.ejercicio"
+                      type="text"
+                      class="form-control"
+                      placeholder="Veces por semana"
+                      formControlName="diasEjercicio"
+                    />
+                  </div>
+                </div>
+
+                <!--Morbido-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Antecedentes morbidos:</label
+                  >
+                  <div class="col-sm-4">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="morbido"
+                        />
+                        Si
+                      </label>
+                    </div>
+                  </div>
+                  <!--AntecedentesMorbidos-->
+                  <div
+                    class="form-group row border-top col-sm-8"
+                    *ngIf="formularioAnamnesis.value.morbido"
+                  >
+                    <!--<label class="col-sm-3 col-form-label"></label>-->
+                    <div class="col-sm-4">
+                      <div
+                        class="form-check"
+                        *ngFor="
+                          let area of AntecedentesMorbidos | slice: 0:6;
+                          let i = index
+                        "
+                      >
+                        <label>
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            [value]="area.valor"
+                            (change)="onMorbido($event)"
+                          />
+                          {{ area.nombre }}
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div
+                        class="form-check"
+                        *ngFor="
+                          let area of AntecedentesMorbidos | slice: 6:12;
+                          let i = index
+                        "
+                      >
+                        <label>
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            [value]="area.valor"
+                            (change)="onMorbido($event)"
+                          />
+                          {{ area.nombre }}
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div
+                        class="form-check"
+                        *ngFor="
+                          let area of AntecedentesMorbidos | slice: 12:17;
+                          let i = index
+                        "
+                      >
+                        <label>
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            [value]="area.valor"
+                            (change)="onMorbido($event)"
+                          />
+                          {{ area.nombre }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--AntecedentesFamiliares-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Antecedentes morbidos familia:</label
+                  >
+                  <div class="col-sm-4">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="morbidoFam"
+                        />
+                        Si
+                      </label>
+                    </div>
+                  </div>
+                  <!--AntecedentesMorbidos-->
+                  <div
+                    class="form-group row border-top col-sm-8"
+                    *ngIf="formularioAnamnesis.value.morbidoFam"
+                  >
+                    <!--<label class="col-sm-3 col-form-label"></label>-->
+                    <div class="col-sm-4">
+                      <div
+                        class="form-check"
+                        *ngFor="
+                          let area of AntecedentesMorbidos | slice: 0:6;
+                          let i = index
+                        "
+                      >
+                        <label>
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            [value]="area.valor"
+                            (change)="onMorbidoFam($event)"
+                          />
+                          {{ area.nombre }}
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div
+                        class="form-check"
+                        *ngFor="
+                          let area of AntecedentesMorbidos | slice: 6:12;
+                          let i = index
+                        "
+                      >
+                        <label>
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            [value]="area.valor"
+                            (change)="onMorbidoFam($event)"
+                          />
+                          {{ area.nombre }}
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div
+                        class="form-check"
+                        *ngFor="
+                          let area of AntecedentesMorbidos | slice: 12:17;
+                          let i = index
+                        "
+                      >
+                        <label>
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            [value]="area.valor"
+                            (change)="onMorbidoFam($event)"
+                          />
+                          {{ area.nombre }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--AntecedentesQuirurjicos-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Antecedentes Quirúrgicos:</label
+                  >
+                  <div class="col-sm-4">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="quirurgicos"
+                        />
+                        Si
+                      </label>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-sm-4"
+                    *ngIf="formularioAnamnesis.value.quirurgicos"
+                  >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Diagnóstico"
+                      formControlName="arrayQuirurgicos"
+                    />
+                  </div>
+                  <div
+                    class="col-sm-4"
+                    *ngIf="formularioAnamnesis.value.quirurgicos"
+                  >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Año"
+                      formControlName="arrayQuirurgicosAnos"
+                    />
+                  </div>
+                </div>
+                <!--Fármacos-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Fármacos:</label
+                  >
+                  <div class="col-sm-4">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="farmacos"
+                        />
+                        Si
+                      </label>
+                    </div>
+                  </div>
+                  <div
+                    class="col-sm-4"
+                    *ngIf="formularioAnamnesis.value.farmacos"
+                  >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Fármaco"
+                      formControlName="arrayFarmacos"
+                    />
+                  </div>
+                  <div
+                    class="col-sm-4"
+                    *ngIf="formularioAnamnesis.value.farmacos"
+                  >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Diagnóstico"
+                      formControlName="arrayFarmacosDiag"
+                    />
+                  </div>
+                </div>
+              </form>
+            </ng-template>
+          </ngb-panel>
+          <!--Examen Físico-->
+          <ngb-panel title="Examen Físico">
+            <ng-template ngbPanelContent>
+              <form class="mx-5 mt-3" [formGroup]="formularioExamenFisico">
+                <!--(ngSubmit)="registro()"-->
+                <!--Deambulación-->
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Deambulación:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluada"
+                      formControlName="deambulacion"
+                    />
+                  </div>
+                </div>
+                <!--Facies-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Facies:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluada"
+                      formControlName="facies"
+                    />
+                  </div>
+                </div>
+                <!--Piel y fanereos-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Piel y fanereos:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluada"
+                      formControlName="pielYFanereos"
+                    />
+                  </div>
+                </div>
+                <!--Estado mental-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Estado mental:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluada"
+                      formControlName="estadoMental"
+                    />
+                  </div>
+                </div>
+                <!--Adenopatías-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Adenopatías:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluada"
+                      formControlName="adenopatias"
+                    />
+                  </div>
+                </div>
+                <!--Cabeza-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Cabeza:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="cabeza"
+                    />
+                  </div>
+                </div>
+                <!--Cuello-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Cuello:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="cuello"
+                    />
+                  </div>
+                </div>
+                <!--Tórax-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Tórax:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="torax"
+                    />
+                  </div>
+                </div>
+                <!--Mamas-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Mamas:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="mamas"
+                    />
+                  </div>
+                </div>
+                <!--Corazón-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Corazón:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="corazon"
+                    />
+                  </div>
+                </div>
+                <!--Pulmones-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Pulmones:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="pulmones"
+                    />
+                  </div>
+                </div>
+                <!--Abdomen-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Abdomen:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="abdomen"
+                    />
+                  </div>
+                </div>
+                <!--Columna-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Columna:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="columna"
+                    />
+                  </div>
+                </div>
+                <!--Extremidades-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Extremidades:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="extremidades"
+                    />
+                  </div>
+                </div>
+                <!--Genitales-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Genitales:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="genitales"
+                    />
+                  </div>
+                </div>
+                <!--ExNeurológico-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Ex.Neurológico:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="exNeurológico"
+                    />
+                  </div>
+                </div>
+                <!--Tacto Rectal-->
+                <label class="font-weight-bold col-sm-12"></label>
+                <div class="form-row">
+                  <label class="font-weight-bold col-sm-12 col-form-label"
+                    >Tacto Rectal:</label
+                  >
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="no evaluado"
+                      formControlName="tactoRectal"
+                    />
+                  </div>
+                </div>
+              </form>
+            </ng-template>
+          </ngb-panel>
+          <!--Hipótesis Diagnóstica-->
+          <ngb-panel title="Hipótesis Diagnóstica">
+            <ng-template ngbPanelContent> Hipótesis Diagnóstica </ng-template>
+          </ngb-panel>
+          <!--Plan Terapéutico-->
+          <ngb-panel title="Plan Terapéutico">
+            <ng-template ngbPanelContent> Plan Terapéutico </ng-template>
+          </ngb-panel>
+          <!--Receta-->
+          <ngb-panel title="Receta">
+            <ng-template ngbPanelContent> Receta </ng-template>
+          </ngb-panel>
+          <!--Exámenes-->
+          <ngb-panel title="Exámenes">
+            <ng-template ngbPanelContent> Exámenes </ng-template>
+          </ngb-panel>
+          <!--Derivaciones-->
+          <ngb-panel title="Derivaciones">
+            <ng-template ngbPanelContent> Derivaciones </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+
+        <!--Botonera-->
+        <div class="form-group row border-top">
+          <div class="col-sm-6 mt-2"></div>
+          <div class="col-sm-6 mt-2">
+            <div class="float-rigth">
+              <button type="submit" class="btn btn-primary btn-block mt-2">
+                Guardar usuario
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

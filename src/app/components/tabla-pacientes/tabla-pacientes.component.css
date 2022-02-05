@@ -1,0 +1,35 @@
+.contenedorTabla {
+  width: 100%;
+  overflow-x: scroll;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.contenedorTabla::-webkit-scrollbar {
+  display: none;
+}
+
+.verPointer {
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.verPointer:hover {
+  color: #deb01f;
+}
+
+.textLg {
+  font-size: small;
+}
+
+.estado_cita {
+  margin: 0;
+  padding: 0;
+  color: var(--danger);
+  font-weight: bold;
+}
+
+.tamBoton {
+  width: 90px !important;
+}

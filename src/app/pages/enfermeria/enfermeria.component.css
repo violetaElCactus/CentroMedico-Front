@@ -1,0 +1,14 @@
+.boxCard {
+  border: 1px solid #f4e5b7;
+  background-color: #fbf7ea;
+  cursor: pointer;
+}
+
+.boxCard h5 {
+  font-weight: bold;
+}
+
+.boxCard:hover {
+  border: 1px solid #deb01f;
+  background-color: #f9f2db;
+}

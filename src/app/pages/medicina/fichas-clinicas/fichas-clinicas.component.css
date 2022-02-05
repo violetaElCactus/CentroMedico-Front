@@ -1,0 +1,12 @@
+.verPointer {
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.verPointer:hover {
+  color: #deb01f;
+}
+
+.textLg {
+  font-size: medium;
+}

@@ -1,0 +1,633 @@
+<!--Instalar un editor WYSIWYG-->
+<!--prettier-ignore-->
+<div class="modal-header">
+  <h4 class="modal-title">Atender</h4>
+  <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <ngb-accordion activeIds="static-1" [closeOthers]="true">
+    <ngb-panel id="static-1">
+      <ng-template ngbPanelTitle>
+        <span class="text-blue"
+          ><b>Motivo de consulta y Anamnesis próxima</b></span
+        >
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="container">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Motivo consulta</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="formAten.mconsulta_ad"
+              />
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Anamnesis próxima</label>
+              <textarea
+                rows="5"
+                class="form-control"
+                [(ngModel)]="formAten.aproxima_ad"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="static-2">
+      <ng-template ngbPanelTitle>
+        <span class="text-blue"><b>Anamnesis remota</b></span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="container">
+          <div class="form-row">
+            <!--prettier-ignore-->
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Morbilidades</label>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-check" *ngFor="let morbido of morbidos | slice: 0:6; let i = index">
+                    <label>
+                      <input [checked]="estaMarcado('morb',morbido)" (change)="onCheckHandle($event,'morb')" type="checkbox" class="form-check-input" [value]="morbido"/>
+                      {{ morbido }}
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-check" *ngFor="let morbido of morbidos | slice: 6:12; let i = index">
+                    <label>
+                      <input [checked]="estaMarcado('morb',morbido)" (change)="onCheckHandle($event,'morb')" type="checkbox" class="form-check-input" [value]="morbido"/>
+                      {{ morbido }}
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-check" *ngFor="let morbido of morbidos | slice: 12:17;let i = index">
+                    <label>
+                      <input [checked]="estaMarcado('morb',morbido)" (change)="onCheckHandle($event,'morb')" type="checkbox" class="form-check-input" [value]="morbido"/>
+                      {{ morbido }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Detalle morbidos</label>
+              <textarea
+                rows="5"
+                class="form-control"
+                [(ngModel)]="formAntec.trat_morb"
+              ></textarea>
+              <small class="text-muted font-italic"
+                >Especificar tratamiento y fecha de diagnóstico.</small
+              >
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Antecedentes quirúrgicos</label>
+              <textarea
+                rows="5"
+                class="form-control"
+                [(ngModel)]="formAntec.ant_quirurgico"
+              ></textarea>
+              <small class="text-muted font-italic"
+                >Especificar procedimiento y fecha.</small
+              >
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Alergias</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="formAntec.alergias"
+              />
+              <small class="text-muted font-italic">
+                Separar las alergias con comas.
+              </small>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Inmunizaciones</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="formAntec.inmuni"
+              />
+              <small class="text-muted font-italic">
+                Separar las inmunizaciones con comas.
+              </small>
+            </div>
+            <!--prettier-ignore-->
+            <div class="form-group col-md-12" *ngIf="sexo === 'mujer'">
+              <label class="font-weight-bold">Antecedentes Gineco-Obstétricos</label>
+              <div class="form-group row">
+                <div class="col-sm-3">
+                  <input type="number" class="form-control" placeholder="Menarquia (años)" [(ngModel)]="formAntec.menarquia"/>
+                </div>
+                <div class="col-sm-3">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="FUR"
+                           name="dp" [(ngModel)]="formAntec.fecha_ult_regla" ngbDatepicker #d="ngbDatepicker" [minDate]="{ year: 1900, month: 1, day: 1 }">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <input type="number" class="form-control" placeholder="G" [(ngModel)]="formAntec.g_ad"/>
+                </div>
+                <div class="col-sm-3">
+                  <input type="text" class="form-control" placeholder="P" [(ngModel)]="formAntec.p_ad"/>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-3">
+                  <input type="number" class="form-control" placeholder="A" [(ngModel)]="formAntec.a_ad"/>
+                </div>
+                <div class="col-sm-3">
+                  <input type="text" class="form-control" placeholder="MAC" [(ngModel)]="formAntec.mac_ad"/>
+                </div>
+                <div class="col-sm-3">
+                  <input type="number" class="form-control" placeholder="Menopausia (años)" [(ngModel)]="formAntec.menopausia"/>
+                </div>
+                <div class="col-sm-3">
+                  <input type="text" class="form-control" placeholder="PAP" [(ngModel)]="formAntec.papanicolaou"/>
+                </div>
+              </div>
+            </div>
+            <!--prettier-ignore-->
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Tabaco</label>
+              <div class="row">
+                <div class="col-sm-4">
+                  <select class="form-control" [(ngModel)]="formAntec.tabaco">
+                    <option value="" selected disabled>Paciente consume</option>
+                    <option value="si">Si</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <input type="number" class="form-control" placeholder="N° Cigarros/Día" [(ngModel)]="formAntec.cant_cig"/>
+                </div>
+                <div class="col-sm-4">
+                  <input type="number" class="form-control" placeholder="N° Años" [(ngModel)]="formAntec.anios_cig"/>
+                </div>
+              </div>
+            </div>
+            <!--prettier-ignore-->
+            <div class="form-group col-md-12">
+                <label class="font-weight-bold">Alcohol</label>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <select class="form-control" [(ngModel)]="formAntec.alcohol">
+                      <option value="" selected disabled>Paciente consume</option>
+                      <option value="si">Si</option>
+                      <option value="no">No</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="number" class="form-control" placeholder="N° Tragos/Día" [(ngModel)]="formAntec.cant_alcohol"/>
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="number" class="form-control" placeholder="Veces/Mes" [(ngModel)]="formAntec.tiempo_alcohol"/>
+                  </div>
+                </div>
+              </div>
+            <!--prettier-ignore-->
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Drogas</label>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-check" *ngFor="let droga of drogasIlegales | slice: 0:3; let i = index">
+                    <label>
+                      <input [checked]="estaMarcado('drogas',droga)" (change)="onCheckHandle($event,'drogas')" type="checkbox" class="form-check-input" [value]="droga"/>
+                      {{ droga }}
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-check" *ngFor="let droga of drogasIlegales | slice: 3:6; let i = index">
+                    <label>
+                      <input [checked]="estaMarcado('drogas',droga)" (change)="onCheckHandle($event,'drogas')" type="checkbox" class="form-check-input" [value]="droga"/>
+                      {{ droga }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <input type="text" class="form-control mt-1" placeholder="Otra droga" [(ngModel)]="formAntec.otra_droga"/>
+              <small class="text-muted font-italic">
+                Especificar en caso que la droga no se encuentre en el listado.
+              </small>
+            </div>
+            <!--prettier-ignore-->
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Ejercicio físico</label>
+              <div class="row">
+                <div class="col-sm-4">
+                  <select class="form-control" [(ngModel)]="formAntec.ejercicio">
+                    <option value="" selected disabled>Realiza actividad</option>
+                    <option value="si">Si</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <input type="number" class="form-control" placeholder="Veces/Semana" [(ngModel)]="formAntec.cant_ejercicio"/>
+                </div>
+                <div class="col-sm-4">
+                  <input type="number" class="form-control" placeholder="Minutos/Sesión" [(ngModel)]="formAntec.min_ejercicio"/>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold"
+                >Medicamentos de uso habitual</label
+              >
+              <textarea
+                rows="5"
+                class="form-control"
+                [(ngModel)]="formAntec.medic_habitual"
+              ></textarea>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Antecedentes personales</label>
+              <div class="row">
+                <div class="col-sm-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Ocupación"
+                    [(ngModel)]="formAntec.ocupacion"
+                  />
+                </div>
+                <div class="col-sm-4">
+                  <select
+                    class="form-control"
+                    [(ngModel)]="formAntec.estado_civil"
+                  >
+                    <option value="" selected disabled>Estado civil</option>
+                    <option value="soltero">Soltero/a</option>
+                    <option value="casado">Casado/a</option>
+                    <option value="divorciado">Divorciado/a</option>
+                    <option value="viudo">Viudo/a</option>
+                    <option value="conviviente">Conviviente civil</option>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <select
+                    class="form-control"
+                    [(ngModel)]="formAntec.niv_educacion"
+                  >
+                    <option value="" selected disabled>
+                      Nivel educacional
+                    </option>
+                    <option value="ninguno">Ninguno</option>
+                    <option value="basica">Básica</option>
+                    <option value="basica incompleta">Básica incompleta</option>
+                    <option value="media">Media</option>
+                    <option value="media incompleta">Media incompleta</option>
+                    <option value="superior">Superior</option>
+                    <option value="superior incompleta">
+                      Superior imcompleta
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Antecedentes familiares</label>
+              <textarea
+                rows="5"
+                class="form-control"
+                [(ngModel)]="formAntec.antec_familiar"
+              ></textarea>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Antecedente sociales</label>
+              <textarea
+                rows="5"
+                class="form-control"
+                [(ngModel)]="formAntec.antec_social"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="static-3">
+      <ng-template ngbPanelTitle>
+        <span class="text-blue"><b>Examen físico</b></span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <!--prettier-ignore-->
+        <div class="container">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Deambulación</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.deam_ad"></textarea>
+                </div>
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Facies</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.facie_ad"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Piel y fanereos</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.piel_ad"></textarea>
+                </div>
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Estado mental</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.emental_ad"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Adenopatías</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.aden_ad"></textarea>
+                </div>
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Cabeza</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.cab_ad"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Cuello</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.cuello_ad"></textarea>
+                </div>
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Tórax</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.torax_ad"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Mamas</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.mamas_ad"></textarea>
+                </div>
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Corazón</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.corazon_ad"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Pulmones</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.pulmones_ad"></textarea>
+                </div>
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Abdomen</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.abd_ad"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Columna</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.col_ad"></textarea>
+                </div>
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Genitales</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.geni_ad"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Tacto rectal</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.trectal_ad"></textarea>
+                </div>
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Examen Neurológico</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.eneuro_ad"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Extremidades superiores</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.eess_ad"></textarea>
+                </div>
+                <div class="col-sm-6">
+                  <label class="font-weight-bold">Extremidades inferiores</label>
+                  <textarea rows="2" class="form-control" placeholder="No examinada" [(ngModel)]="formAten.eeii_ad"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+
+    <!--prettier-ignore-->
+    <ngb-panel id="static-4">
+      <ng-template ngbPanelTitle>
+        <span class="text-blue"><b>Hipótesis diagnóstica</b></span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="container">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold"
+                >Diagnóstico principal (CIE-10)
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="buscarDiagnostico"
+                (ngModelChange)="this.buscarDiagnosticoDebounce.next($event)"
+                placeholder="Ingrese diagnósitico a buscar"
+              />
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Resultado de la búsqueda </label>
+              <select class="form-control" [(ngModel)]="formAten.dgcie10_ad">
+                <option value="" selected disabled>
+                  Seleccione una opción
+                </option>
+                <option
+                  value="{{ diagnostico.nombre }}"
+                  *ngFor="let diagnostico of listaDiagnostico"
+                >
+                  {{ diagnostico.nombre }}
+                </option>
+              </select>
+              <small class="text-muted font-italic">{{
+                mensajeBusquedaDiagnostico
+              }}</small>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Otros diagnósticos</label>
+              <textarea rows="3" class="form-control" [(ngModel)]="formAten.dgsec_ad"></textarea>
+              <small class="text-muted font-italic"
+                >Diagnóstico sin CIE-10</small
+              >
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Observaciones</label>
+              <textarea rows="3" class="form-control" [(ngModel)]="formAten.obsdg_ad"></textarea>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <!--prettier-ignore-->
+    <ngb-panel id="static-5">
+      <ng-template ngbPanelTitle>
+        <span class="text-blue"><b>Solicitud de exámenes</b></span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="container">
+          <div class="form-row">
+            <div class="form-group col-md-12" *ngFor="let examen of formAten.planest_ad; let i = index">
+              <label class="font-weight-bold">Examen #{{i+1}} </label>
+              <div class="input-group">
+                <input type="text" class="form-control" [(ngModel)]="examen.value" #name="ngModel" name="examen{{i}}"/>
+                <div class="input-group-append">
+                  <span class="input-group-text" (click)="removeExamen(i)" style="cursor: pointer;">&times;</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                  <button class="btn btn-secondary btn-block" (click)="addExamen()">
+                    Agregar examen
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <!--prettier-ignore-->
+    <ngb-panel id="static-6">
+      <ng-template ngbPanelTitle>
+        <span class="text-blue"><b>Tratamiento</b></span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="container">
+          <div class="form-row">
+            <!--prettier-ignore-->
+            <div class="form-group col-md-12" *ngFor="let med of formAten.med_ad; let i = index">
+              <label class="font-weight-bold">Medicamento #{{i+1}}</label>
+              <div class="row">
+                <div class="col-sm-3">
+                  <input type="text" class="form-control" placeholder="Medicamento" [(ngModel)]="med.medicamento"/>
+                </div>
+                <div class="col-sm-2">
+                  <select class="form-control" [(ngModel)]="med.via">
+                    <option value="" selected disabled>Vía admins..</option>
+                    <option value="{{via}}" *ngFor="let via of viaAdministacion">{{via}}</option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <input type="text" class="form-control" placeholder="Dosis (mg)" [(ngModel)]="med.dosis"/>
+                </div>
+                <div class="col-sm-2">
+                  <input type="number" class="form-control" placeholder="Cada (horas)" [(ngModel)]="med.hrs"/>
+                </div>
+                <div class="col-sm-2">
+                  <input type="number" class="form-control" placeholder="Días de TTO" [(ngModel)]="med.dias"/>
+                </div>
+                <div class="col-sm-1">
+                  <span class="align-middle">
+                    <i class="fas fa-times align-middle" (click)="removeMedicamento(i)" style="cursor: pointer;"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="font-weight-bold">Indicaciones </label>
+              <textarea rows="3" class="form-control"></textarea>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                  <button class="btn btn-secondary btn-block" (click)="addMedicamento()">
+                    Agregar medicamento
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <!--Internos-->
+    <ngb-panel id="static-7">
+      <ng-template ngbPanelTitle>
+        <span class="text-blue"><b>Participantes</b></span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="container">
+          <div class="form-row">
+            <div
+              class="form-group col-md-12"
+              *ngFor="let inter of formAten.intern; let i = index"
+            >
+              <label class="font-weight-bold">Interno #{{ i + 1 }} </label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="inter.value"
+                  #name="ngModel"
+                  name="int{{ i }}"
+                />
+                <div class="input-group-append">
+                  <span
+                    class="input-group-text"
+                    (click)="removeInterno(i)"
+                    style="cursor: pointer"
+                    >&times;</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                  <button
+                    class="btn btn-secondary btn-block"
+                    (click)="addInterno()"
+                  >
+                    Agregar interno
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+  <div class="row mt-3">
+    <div class="col-md-8"></div>
+    <div class="col-md-4">
+      <button class="btn btn-primary btn-block" (click)="guardarFormulario()">
+        Guardar
+      </button>
+    </div>
+  </div>
+</div>

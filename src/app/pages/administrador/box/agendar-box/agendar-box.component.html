@@ -1,0 +1,160 @@
+<!--Cabecera de la página-->
+<section class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 col-md-8">
+        <h1 class="font-weight-bold mb-0">Gestionar horarios</h1>
+        <p class="lead text-muted">
+          Asigna los horarios de uso de los boxes para el día:
+          {{ mensajeCabecera }}.
+        </p>
+      </div>
+      <div class="col-lg-3 col-md-4 d-flex">
+        <button
+          class="btn btn-primary w-100 align-self-center"
+          (click)="open(content)"
+        >
+          Asignar box
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Cuerpo con la tabla de asignaciones-->
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 my-3">
+        <div class="card rounded-0">
+          <div class="card-header bg-light">
+            <h6 class="font-weight-bold mb-0">Tabla de box asignados</h6>
+          </div>
+          <div class="card-body">
+            <div
+              class="contenedorTabla"
+              style="width: 100%; overflow-x: scroll"
+              *ngIf="boxesAsignados.length !== 0"
+            >
+              <app-tabla-asignar [boxes]="boxesAsignados"></app-tabla-asignar>
+            </div>
+            <div *ngIf="boxesAsignados.length === 0">
+              <div class="card-body">
+                <div class="row mx-lg-5 mx-sm-1 justify-content-center">
+                  <div class="col-lg-10 col-sm-12 mb-2">
+                    <div class="card boxCard">
+                      <div class="card-body">
+                        <h5>No hay boxes asignados</h5>
+                        <small
+                          >Seleccione el botón "Asignar box" para designar a un
+                          profesional.
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Modal para agregar una nueva asignación-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Asignar profesional</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="formularioAsignarBox" (ngSubmit)="asignarBox()">
+    <div class="modal-body">
+      <!--Seleccionar box-->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Box:</label>
+        <div class="col-sm-9">
+          <select class="custom-select custom-select" formControlName="id_box">
+            <option value="" selected disabled>Seleccionar un box</option>
+            <option
+              value="{{ box.id_lugar }}"
+              *ngFor="let box of boxesDisponibles"
+            >
+              {{ box.nro_box }} - {{ box.zona }}
+            </option>
+          </select>
+          <small class="form-text text-orange" *ngIf="campoEsValido('id_box')"
+            >Debe seleccionar un box.</small
+          >
+        </div>
+      </div>
+      <!--Seleccionar profesional para mañana-->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Mañana:</label>
+        <div class="col-sm-9">
+          <select class="custom-select custom-select" formControlName="manana">
+            <option value="" selected disabled>Seleccionar profesional</option>
+            <option
+              value="{{ usuario.nombre }} {{ usuario.apellido }}"
+              *ngFor="let usuario of usuarios"
+            >
+              {{ usuario.nombre }} {{ usuario.apellido }}
+            </option>
+          </select>
+          <small class="form-text text-orange" *ngIf="campoEsValido('manana')"
+            >Debe ingresar un profesional en este horario.</small
+          >
+        </div>
+      </div>
+      <!--Seleccionar profesional para tarde-->
+      <!--Seleccionar box-->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Tarde:</label>
+        <div class="col-sm-9">
+          <select class="custom-select custom-select" formControlName="tarde">
+            <option value="" selected disabled>Seleccionar profesional</option>
+            <option
+              value="{{ usuario.nombre }} {{ usuario.apellido }}"
+              *ngFor="let usuario of usuarios"
+            >
+              {{ usuario.nombre }} {{ usuario.apellido }}
+            </option>
+          </select>
+          <small class="form-text text-orange" *ngIf="campoEsValido('tarde')"
+            >Debe ingresar un profesional en este horario.</small
+          >
+        </div>
+      </div>
+      <!--Fecha-->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Fecha:</label>
+        <div class="col-sm-9">
+          <input
+            type="text"
+            class="form-control"
+            disabled
+            [value]="mensajeCabecera"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="formularioAsignarBox.invalid"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<pre>{{ formularioAsignarBox.value | json }}</pre>

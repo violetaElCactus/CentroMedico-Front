@@ -1,0 +1,131 @@
+:root {
+  --primary: #111b54;
+  --primaryhover: #283165;
+  --light: #ffffff;
+  --grey: #efefef;
+  --orange: #deb01f;
+  --lightorange: #f8efd2;
+  --lightSecondary: #fbfbfb;
+}
+
+body {
+  overflow: hidden;
+  font-family: "Muli", sans-serif;
+  font-weight: 300;
+  color: var(--primary);
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.bg-primary {
+  background-color: var(--primary) !important;
+}
+
+.bg-light {
+  background-color: var(--light) !important;
+}
+
+.bg-grey {
+  background-color: var(--grey) !important;
+}
+
+.bg-mix {
+  background: linear-gradient(180deg, var(--light) 50%, var(--grey) 0);
+}
+
+.bg-secondary {
+  background-color: var(--lightSecondary) !important;
+}
+
+.bg-lightorange {
+  background-color: var(--lightorange);
+}
+
+.bg-orange {
+  background-color: var(--orange);
+}
+.btn-primary {
+  background-color: var(--primary);
+  border: 0;
+}
+
+.btn-primary:hover {
+  background-color: var(--primaryhover);
+}
+
+.btn-secondary {
+  background-color: var(--orange);
+  border: 0;
+}
+
+.badge-orange {
+  background-color: var(--orange);
+}
+
+.badge-lightorange {
+  background-color: var(--lightorange);
+}
+
+.text-blue {
+  color: var(--primary);
+}
+
+.text-orange {
+  color: var(--orange);
+}
+
+.list-padding {
+  padding: 0.35rem 1rem;
+}
+
+.nopaddingnomargin {
+  padding: 0;
+  margin: 0;
+}
+
+#sidebar-container {
+  min-height: 100vh;
+}
+
+#sidebar-container .logo {
+  padding: 0.875rem 1.25rem;
+}
+
+#sidebar-container .menu {
+  height: 100%;
+  width: 18rem;
+}
+
+#sidebar-container hr {
+  border: 1px solid #0d1543;
+  width: 90%;
+}
+
+#content {
+  overflow-y: auto;
+  height: 100vh;
+  padding-bottom: 5rem;
+}
+
+.avatar {
+  max-width: 45px;
+}
+
+.btn-search {
+  right: 0;
+}
+
+.stat {
+  border-right: 1px solid var(--grey);
+}
+
+@media (max-width: 768px) {
+  #sidebar-container {
+    display: none;
+  }
+  .stat {
+    border: 0;
+  }
+}

@@ -1,0 +1,61 @@
+ol {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0;
+}
+
+.num_dia {
+  text-align: right;
+  font-size: 3rem;
+  border: 1px solid #efefef;
+  cursor: pointer;
+}
+
+.num_dia:hover {
+  border: 1px solid #deb01f;
+  background-color: #f8efd2;
+}
+
+.dia_actual {
+  border: 1px solid #f8efd2;
+  background-color: #f9f2db;
+  color: #deb01f;
+}
+
+.calendario {
+  text-align: center;
+}
+
+.nombre_dia {
+  font-weight: bold;
+  text-align: center;
+  cursor: default;
+  font-size: 3rem;
+  color: #283165;
+}
+
+.header-calendario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+.header-calendario button {
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+}
+
+@media only screen and (max-width: 450px) {
+  .calendario li {
+    font-size: 1.2rem;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 820px) {
+  .calendario li {
+    font-size: 1.7rem;
+  }
+}

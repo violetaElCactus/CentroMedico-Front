@@ -1,0 +1,37 @@
+<!--Cabecera de la página-->
+<section class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 col-md-8">
+        <h1 class="font-weight-bold mb-0">Agendar citas</h1>
+        <p class="lead text-muted">
+          Asigna el horario y el box donde se atenderá la cita.
+          {{ mensajeCabecera }}.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Cuerpo con la tabla de asignaciones-->
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 my-3">
+        <div class="card rounded-0">
+          <div class="card-header bg-light">
+            <h6 class="font-weight-bold mb-0">Tabla de citas agendadas</h6>
+          </div>
+          <div class="card-body">
+            <div
+              class="contenedorTabla"
+              style="width: 100%; overflow-x: scroll"
+            >
+              <app-tabla-agendar></app-tabla-agendar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

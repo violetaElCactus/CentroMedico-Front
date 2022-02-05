@@ -1,0 +1,161 @@
+<table class="table table-bordered small">
+  <thead>
+    <tr>
+      <th scope="col">Sectores</th>
+      <th scope="col" *ngFor="let horario of listaHorarios">{{ horario }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let sector of listaSectores">
+      <tr class="bg-grey">
+        <td class="font-weight-bold">{{ sector | titlecase }}</td>
+        <td colspan="37"></td>
+      </tr>
+      <tr *ngFor="let box of listaBox">
+        <ng-container *ngIf="box.zona === sector">
+          <td>{{ box.nro_box }}</td>
+          <td
+            class="detalleBloque text-center"
+            *ngFor="let horario of listaHorarios"
+            (click)="obtenerDia(horario, box.id_lugar, content)"
+          >
+            <ng-container *ngFor="let cita of listaCitas">
+              <ng-container
+                *ngIf="
+                  cita.hora === horario && box.id_lugar === cita.lugar_atencion
+                "
+              >
+                <p class="badge_paciente">
+                  {{ cita.nombre_paciente | inicialesPaciente }}
+                </p>
+              </ng-container>
+            </ng-container>
+          </td>
+        </ng-container>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<!--Formulario de las citas-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Agendar citas</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <div class="form-group col-md-12">
+        <label class="font-weight-bold">Lista de citas</label>
+        <select class="custom-select custom-select">
+          <option value="" selected disabled>Seleccionar cita</option>
+          <option
+            *ngFor="let cita of listaCitas"
+            (click)="agendarPaciente(cita)"
+          >
+            {{ cita.nombre_paciente }} | {{ cita.nombre_profesional }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <hr />
+    <form (ngSubmit)="actualizar()" [formGroup]="formularioCita">
+      <div class="form-group container">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label class="font-weight-bold">Nombre paciente</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="nombre_paciente"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label class="font-weight-bold">Nombre social</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="nombre_social"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label class="font-weight-bold">Rut paciente</label>
+            <input type="text" class="form-control" formControlName="rut" />
+          </div>
+          <div class="form-group col-md-6">
+            <label class="font-weight-bold">Teléfono paciente</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="telefono"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label class="font-weight-bold">Profesional asignado</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="nombre_profesional"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label class="font-weight-bold">Área médica</label>
+            <input type="text" class="form-control" formControlName="valor" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label class="font-weight-bold">Tipo de consulta</label>
+            <input type="text" class="form-control" formControlName="tipo" />
+          </div>
+          <div class="form-group col-md-6">
+            <label class="font-weight-bold">Fecha</label>
+            <input type="text" class="form-control" formControlName="fecha" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label class="font-weight-bold">Hora</label>
+            <input type="text" class="form-control" formControlName="hora" />
+          </div>
+          <div class="form-group col-md-6" style="display: none">
+            <label class="font-weight-bold">Box</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="lugar_atencion"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="eliminarCita()"
+          [disabled]="!puedeModificar"
+        >
+          Remover
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!puedeModificar"
+        >
+          Agendar
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

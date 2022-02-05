@@ -1,0 +1,15 @@
+.detalleBloque {
+  cursor: pointer;
+}
+
+.detalleBloque:hover {
+  background-color: var(--lightorange);
+}
+
+.badge_paciente {
+  margin: 0;
+  padding: 0;
+  background-color: var(--orange);
+  font-weight: bold;
+  border-radius: 15%;
+}

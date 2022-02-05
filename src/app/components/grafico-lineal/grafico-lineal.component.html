@@ -1,0 +1,23 @@
+<div class="card rounded-0">
+  <div class="card-header bg-light">
+    <h6 class="font-weight-bold mb-0">Resumen de citas atendidas</h6>
+  </div>
+  <div class="card-body">
+    <div style="display: block">
+      <canvas
+        baseChart
+        width="400"
+        height="150px"
+        [datasets]="lineChartData"
+        [labels]="lineChartLabels"
+        [options]="lineChartOptions"
+        [colors]="lineChartColors"
+        [legend]="false"
+        [chartType]="lineChartType"
+        [plugins]="lineChartPlugins"
+      >
+        >
+      </canvas>
+    </div>
+  </div>
+</div>

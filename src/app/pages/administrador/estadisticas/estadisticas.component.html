@@ -1,0 +1,78 @@
+<!--Nombre del usuario-->
+<section class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 col-md-8">
+        <h1 class="font-weight-bold mb-0">Estadísticas</h1>
+        <p class="lead text-muted">
+          Revisa la última información sobre el desempeño del Centro Médico.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 my-3">
+        <div class="card rounded-0">
+          <div class="card-header bg-light">
+            <h6 class="font-weight-bold mb-0">Estadísticas diarias</h6>
+          </div>
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <app-calendario [path]="'estadisticas/diario'"></app-calendario>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 my-3">
+        <div class="card rounded-0">
+          <div class="card-header bg-light">
+            <h6 class="font-weight-bold mb-0">Estadísticas mensuales</h6>
+          </div>
+          <div class="card-header bg-light">
+              <div class="row justify-content-center">
+              <div class="col-sm-4">
+                <select class="form-control" [(ngModel)]="mesSelect">
+                  <option value="" selected disabled>
+                    Seleccione un mes
+                  </option>
+                  <option
+                    value="{{ mes.valor }}"
+                    *ngFor="let mes of meses"
+                  >
+                    {{ mes.nombre }}
+                  </option>
+                </select>
+              </div> 
+              <div class="col-sm-4">
+                <select class="form-control" [(ngModel)]="anioSelect">
+                  <option value="" selected disabled>
+                    Seleccione un año
+                  </option>
+                  <option
+                    value="{{ anio }}"
+                    *ngFor="let anio of anios"
+                  >
+                    {{ anio }}
+                  </option>
+                </select>
+              </div>  
+              <div class="col-sm-4">
+                <app-est-mensual  [mesSelect]="mesSelect" [anioSelect]="anioSelect"></app-est-mensual>
+              </div>  
+                    
+            </div>  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

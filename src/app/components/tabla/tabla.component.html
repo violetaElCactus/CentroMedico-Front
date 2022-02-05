@@ -1,0 +1,81 @@
+<div class="form-group form-inline">
+  Buscar profesional:
+  <input
+    class="form-control ml-2"
+    type="text"
+    [(ngModel)]="buscarProfesional"
+    placeholder="Nombre o apellido"
+  />
+</div>
+<table
+  class="table table-striped"
+  style="font-size: small; white-space: nowrap"
+>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre completo</th>
+      <th scope="col">E-mail</th>
+      <th scope="col">Unidades</th>
+      <th scope="col">Contacto</th>
+      <th scope="col" style="width: 5%">Ver</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let usuario of usuarios | listFilter: buscarProfesional;
+        let i = index
+      "
+    >
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        {{ usuario.nombre | titlecase }} {{ usuario.apellido | titlecase }}
+      </td>
+      <td>{{ usuario.correo_electronico }}</td>
+      <td>
+        <span
+          class="badge badge-secondary mr-1"
+          style="font-size: small"
+          *ngIf="usuario.direccion === 1"
+        >
+          Dirección
+        </span>
+        <span
+          class="badge badge-secondary mr-1"
+          style="font-size: small"
+          *ngIf="usuario.coordinacion === 1"
+        >
+          Coordinación
+        </span>
+        <span
+          class="badge badge-secondary mr-1"
+          style="font-size: small"
+          *ngIf="usuario.profesional === 1"
+        >
+          Profesional
+        </span>
+        <span
+          class="badge badge-secondary mr-1"
+          style="font-size: small"
+          *ngIf="usuario.administrativo === 1"
+        >
+          Administrativo
+        </span>
+      </td>
+
+      <td>{{ usuario.telefono }}</td>
+      <td class="text-center">
+        <h5
+          class="verPointer"
+          [routerLink]="[
+            '/dashboard/administrador/usuarios/detalle',
+            usuario.rut
+          ]"
+        >
+          <i class="fas fa-eye"></i>
+        </h5>
+      </td>
+    </tr>
+  </tbody>
+</table>

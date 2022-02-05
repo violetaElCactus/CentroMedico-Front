@@ -1,0 +1,22 @@
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+  <li [ngbNavItem]="1">
+    <a ngbNavLink>Atenciones</a>
+    <ng-template ngbNavContent>
+      <app-ficha-atencion></app-ficha-atencion>
+    </ng-template>
+  </li>
+  <li [ngbNavItem]="2">
+    <a ngbNavLink>Antecedentes</a>
+    <ng-template ngbNavContent>
+      <app-ficha-antecedentes></app-ficha-antecedentes>
+    </ng-template>
+  </li>
+  <li [ngbNavItem]="3">
+    <a ngbNavLink>Certificados</a>
+    <ng-template ngbNavContent>
+      <app-ficha-certificados></app-ficha-certificados>
+    </ng-template>
+  </li>
+</ul>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>

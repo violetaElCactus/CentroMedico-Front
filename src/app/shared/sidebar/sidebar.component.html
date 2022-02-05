@@ -1,0 +1,40 @@
+<!--prettier-ignore-->
+<div id="sidebar-container" class="bg-primary">
+    <div class="logo">
+      <h4 class="text-light font-weight-bold mb-0">Centro Médico</h4>
+    </div>
+    <div class="menu">
+      <!--Contenido para todos los perfiles-->
+      <ul style="padding: 0; list-style-type: none">
+        <li>
+          <p class="d-block text-light p-2 ml-2 mb-0 border-0"
+            ><i class="fas fa-bars mr-2"></i> Configuraciones</p>
+          <ul style="padding: 0; list-style-type: none">
+            <li>
+              <a routerLink="/dashboard/perfil" class="d-block text-light p-1 ml-5 border-0">Mi perfil</a>
+            </li>
+            <li>
+              <a (click)="cerrarSesion()" class="d-block text-light p-1 ml-5 border-0 cerrarSesion">Cerrar sesión</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+  
+      <hr />
+  
+      <!--Contenido del sidebar que se carga de acuerdo con el rol-->
+      <ul style="padding: 0; list-style-type: none;">
+        <li *ngFor="let item of menuItems">
+          <p class="d-block text-light p-2 ml-2 mb-0 border-0"
+          ><i class="{{item.icono}} mr-2"></i> {{item.titulo}}</p>
+          <ul style="padding: 0; list-style-type: none">
+            <li *ngFor="let subItem of item.submenu">
+              <a [routerLink]="subItem.url" class="d-block text-light p-1 ml-5 border-0">{{subItem.titulo}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+  
+    </div>
+  
+  </div>

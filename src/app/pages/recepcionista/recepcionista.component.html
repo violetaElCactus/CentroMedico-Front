@@ -1,0 +1,284 @@
+<!--Nombre del usuario-->
+<section class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 col-md-8">
+        <h1 class="font-weight-bold mb-0">
+          Saludos {{ usuario.nombre | titlecase }}
+          {{ usuario.apellido | titlecase }}
+        </h1>
+        <p class="lead text-muted">Revisa la agenda de citas para hoy.</p>
+      </div>
+
+      <div class="col-lg-3 col-md-4 d-flex">
+        <button
+          class="btn btn-primary w-100 align-self-center"
+          (click)="open(content)"
+        >
+          Registrar paciente
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Contenedor de tarjetas-->
+<section class="bg-mix py-3">
+  <div class="container">
+    <div class="card rounded-0">
+      <div class="card-body">
+        <div class="row">
+          <div
+            class="col-lg-3 col-md-6 d-flex stat my-3"
+            *ngFor="let item of tarjetas"
+          >
+            <div class="mx-auto">
+              <app-card [tarjeta]="item"></app-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Sección de búsqueda y visualización de usuarios-->
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 my-3">
+        <div class="card rounded-0">
+          <div class="card-header bg-light">
+            <h6 class="font-weight-bold mb-0">
+              Consultas agendadas para hoy ({{ fecha }})
+            </h6>
+          </div>
+          <div class="card-body">
+            <!--Tabla de usuarios registrados-->
+            <div class="row mt-3">
+              <div
+                class="mx-lg-5 mx-sm-2 contenedorTabla"
+                style="width: 100%; overflow-x: scroll"
+              >
+                <app-tabla-pacientes
+                  [listaCitas]="listaCitas"
+                ></app-tabla-pacientes>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Modal para crear un paciente-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Registrar paciente</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <!--prettier-ignore-->
+  <div class="modal-body">
+    <form [formGroup]="formularioPaciente" (ngSubmit)="registrarPaciente()">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Nombre</label>
+          <input type="text" class="form-control" formControlName="nombre">
+          <small class="form-text text-orange" *ngIf="campoEsValido('nombre')">
+            Nombre es obligatorio (*)
+          </small>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Apellido</label>
+          <input type="text" class="form-control" formControlName="apellido">
+          <small class="form-text text-orange" *ngIf="campoEsValido('apellido')">
+            Apellido es obligatorio (*)
+          </small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <div class="form-group">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="nomSocial" (click)="toggleShow('checkNombreSocial')" >
+              <label class="form-check-label" for="nomSocial">Paciente con nombre social.</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="form-group">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="nacionalidad" (click)="toggleShow('checkNacionalidad')" >
+              <label class="form-check-label" for="nacionalidad">Paciente extranjero.</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row" *ngIf="checkBoxes.checkNombreSocial">
+        <div class="form-group col-md-12">
+          <label class="font-weight-bold">Nombre social</label>
+          <input type="text" class="form-control" formControlName="nombre_social">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">RUT/Pasaporte</label>
+          <input type="text" class="form-control" formControlName="rut" [value]="formularioPaciente.get('rut')?.value | formatearRut">
+          <small class="form-text text-orange" *ngIf="campoEsValido('rut')">
+            RUT es obligatorio (*)
+          </small>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Fecha nacimiento</label>
+          <div class="form-group">
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="aaaa-mm-dd | (1993-11-29)"
+                name="dp"
+                formControlName="fecha_nacimiento"
+                ngbDatepicker
+                #d="ngbDatepicker"
+                [minDate]="{ year: 1900, month: 1, day: 1 }"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary"
+                  (click)="d.toggle()"
+                  type="button"
+                >
+                  <i class="far fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
+            <small class="form-text text-orange" *ngIf="campoEsValido('fecha_nacimiento')">
+              Fecha naciemiento es obligatoria (*)
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Télefono</label>
+          <input type="text" class="form-control" formControlName="telefono">
+        </div>
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Correo electrónico</label>
+          <input type="text" class="form-control" formControlName="correo_electronico">
+          <small class="form-text text-orange" *ngIf="campoEsValido('correo_electronico')">
+            Correo no es válido (*)
+          </small>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Sexo</label>
+          <select class="custom-select custom-select" formControlName="sexo">
+            <option value="" selected disabled>
+              Seleccionar sexo
+            </option>
+            <option value="hombre">Hombre</option>
+            <option value="mujer">Mujer</option>
+            <option value="hombre transexual">Hombre Transexual</option>
+            <option value="mujer transexual">Mujer Transexual</option>
+            <option value="otro">Otro</option>
+          </select>
+          <small class="form-text text-orange" *ngIf="campoEsValido('sexo')">
+            Ingresar sexo es obligatorio (*)
+          </small>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Género</label>
+          <select class="custom-select custom-select" formControlName="genero">
+            <option value="" selected disabled>
+              Seleccionar género
+            </option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+            <option value="trans masculino">Trans Masculino</option>
+            <option value="trans femenino">Trans Femenino</option>
+            <option value="no binarie">No Binarie</option>
+            <option value="otro">Otro</option>
+          </select>
+          <small class="form-text text-orange" *ngIf="campoEsValido('genero')">
+            Ingresar género es obligatorio (*)
+          </small>
+        </div>
+      </div>
+
+      <div class="form-row" *ngIf="!checkBoxes.checkNacionalidad">
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Región</label>
+          <select class="custom-select custom-select" formControlName="region">
+            <option value="0" selected disabled>Seleccionar región</option>
+            <option (click)="obtenerComunas(region.id_region)" value="{{region.id_region}}" *ngFor="let region of listaRegiones">{{region.numero_romano}} - {{region.nombre_region}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Comuna</label>
+          <select class="custom-select custom-select" formControlName="comuna">
+            <option value="0" selected disabled>Seleccionar comuna</option>
+            <option value="{{comuna.id_comuna}}" *ngFor="let comuna of listaComunas">{{comuna.nombre_comuna}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row" *ngIf="checkBoxes.checkNacionalidad">
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Nacionalidad</label>
+          <input type="text" class="form-control" formControlName="nacionalidad">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label class="font-weight-bold">Dirección</label>
+          <input type="text" class="form-control" formControlName="direccion">
+          <small class="form-text text-orange" *ngIf="campoEsValido('direccion')">
+            Dirección es obligatoria (*)
+          </small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <div class="form-group">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="ppo" (click)="toggleShow('checkPuebloOrigin')" >
+              <label class="form-check-label" for="ppo">Paciente pertenece a pueblos originarios.</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row" *ngIf="checkBoxes.checkPuebloOrigin">
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Pueblo originario</label>
+          <input type="text" class="form-control" formControlName="pueblo_originario">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Previsión</label>
+          <input type="text" class="form-control" formControlName="prevision">
+        </div>
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Cesfam</label>
+          <input type="text" class="form-control" formControlName="cesfam">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary"
+        >
+          Registrar
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

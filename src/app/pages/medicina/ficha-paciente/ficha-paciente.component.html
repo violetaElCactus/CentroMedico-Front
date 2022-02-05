@@ -1,0 +1,166 @@
+<!--Encabezado de la página -->
+<section class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-lg-9 col-md-8"
+        *ngIf="paciente.nombre_social == 'no especifica'"
+      >
+        <h1 class="font-weight-bold mb-0">
+          {{ paciente.nombre | titlecase }} {{ paciente.apellido | titlecase }}
+        </h1>
+      </div>
+      <div
+        class="col-lg-9 col-md-8"
+        *ngIf="paciente.nombre_social !== 'no especifica'"
+      >
+        <h1 class="font-weight-bold mb-0">
+          {{ paciente.nombre_social | titlecase }}
+        </h1>
+        <p class="lead text-muted font-italic">
+          Nombre civil: {{ paciente.nombre }} {{ " " }}{{ paciente.apellido }}
+        </p>
+      </div>
+      <div class="col-lg-3 col-md-4 d-flex" *ngIf="cita !== undefined">
+        <button
+          class="btn btn-primary w-100 align-self-center"
+          (click)="abrirFormulario()"
+          [disabled]="cita.estado === 'atendida'"
+        >
+          Atender consulta
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Ficha de paciente-->
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 my-3">
+        <div class="row">
+          <div class="card card-primary card-outline" style="width: 100%">
+            <div class="card-header bg-light">
+              <h5 class="font-weight-bold mb-1 text-center">Datos paciente</h5>
+              <ul class="list-group list-group-flush border-top">
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>RUT: </strong>{{ paciente.rut | formatearRut }}
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>Edad: </strong>{{ edad_paciente }}
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>Sexo: </strong>{{ paciente.sexo | titlecase }}
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>Género: </strong>{{ paciente.genero | titlecase }}
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <button
+                    class="btn btn-secondary btn-block mt-2"
+                    (click)="abrirDatosPaciente()"
+                  >
+                    Ver Datos
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3" *ngIf="signosVitales.length !== 0">
+          <div class="card card-primary card-outline" style="width: 100%">
+            <div class="card-header bg-light">
+              <h5 class="font-weight-bold mb-1 text-center">Signos vitales</h5>
+              <ul class="list-group list-group-flush border-top">
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>Saturación O<sub>2</sub>:</strong>
+                    {{ signosVitales.sat }}%
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>Temperatura: </strong> {{ signosVitales.temp }} °C
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>Peso: </strong> {{ signosVitales.peso }} kg
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>Talla: </strong> {{ signosVitales.talla }} m
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>IMC: </strong> {{ signosVitales.imc }} kg/m²
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>Estado Nut: </strong>
+                    {{ signosVitales.estado_nutri }}
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>CC: </strong> {{ signosVitales.ccintura }} cm
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>P.Arterial: </strong> {{ signosVitales.pam }} mmHg
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>Pulso: </strong> {{ signosVitales.pulso }} lpm
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>F.Respiratoria: </strong>
+                    {{ signosVitales.fresp }} rpm
+                  </h6>
+                </li>
+                <li class="list-group-item">
+                  <h6 class="nopaddingnomargin">
+                    <strong>Registro: </strong>
+                    {{ signosVitales.fecha }}
+                  </h6>
+                </li>
+                <li class="list-group-item" *ngIf="cita !== undefined">
+                  <button
+                    class="btn btn-primary btn-block mt-2"
+                    (click)="abrirSignosVitales()"
+                    [disabled]="cita.estado === 'atendida'"
+                  >
+                    Actualizar SV
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 my-3">
+        <div class="card">
+          <div class="card-body">
+            <app-contenido-ficha></app-contenido-ficha>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

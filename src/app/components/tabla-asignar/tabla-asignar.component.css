@@ -1,0 +1,24 @@
+.contenedorTabla {
+  width: 100%;
+  overflow-x: scroll;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.contenedorTabla::-webkit-scrollbar {
+  display: none;
+}
+
+.verPointer {
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.verPointer:hover {
+  color: #deb01f;
+}
+
+.textLg {
+  font-size: small;
+}

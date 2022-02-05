@@ -1,0 +1,64 @@
+<ng-container *ngIf="listaAtenciones.length !== 0">
+  <div class="container mt-3">
+    <div class="card rounded-5 mt-3" *ngFor="let atencion of listaAtenciones">
+      <div class="card-header bg-secondary">
+        <div class="d-flex">
+          <h6 class="nopaddingmargin">
+            <strong>Motivo consulta:</strong> {{ atencion.mconsulta_ad }}
+          </h6>
+          <div class="ml-auto">
+            <p class="nopaddingnomargin font-weight-bold">
+              {{ atencion.fechacon_ad }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card-body bg-secondary pt-2">
+        <div class="container">
+          <p>{{ atencion.aproxima_ad }}</p>
+          <h6><strong>Diagnóstico CIE-10:</strong></h6>
+          <p>{{ atencion.dgcie10_ad }}.</p>
+          <h6><strong>Otros dianósticos:</strong></h6>
+          <p>{{ atencion.dgsec_ad }}.</p>
+          <h6><strong>Atendido por: </strong></h6>
+          <p>
+            {{
+              atencion.nombre_profesional
+                | formatearProfesional: atencion.sexo_profesional
+            }}
+          </p>
+          <div class="row">
+            <div class="col-sm-7"></div>
+            <div class="col-sm-5">
+              <app-comprobante [idCita]="atencion.id_cita"></app-comprobante>
+              <app-est-mensual></app-est-mensual>
+              <app-receta [idCita]="atencion.id_cita" class="ml-1"></app-receta>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="listaAtenciones.length === 0">
+  <div class="container mt-3">
+    <div class="card rounded-5">
+      <div class="card-header bg-secondary">
+        <div class="d-flex">
+          <h6 class="nopaddingmargin">
+            <strong>Atención</strong>
+          </h6>
+          <div class="ml-auto">
+            <p class="nopaddingnomargin font-weight-bold">:(</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-body bg-secondary pt-2">
+        <div class="container">
+          El paciente no registra atenciones en el centro médico.
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

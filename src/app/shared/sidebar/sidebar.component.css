@@ -1,0 +1,15 @@
+.scroll-menu {
+  height: 100%;
+  overflow-y: scroll;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scroll-menu::-webkit-scrollbar {
+  display: none;
+}
+
+.cerrarSesion {
+  cursor: pointer;
+}
